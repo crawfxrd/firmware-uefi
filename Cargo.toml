@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-FileCopyrightText: 2024 System76, Inc.
+
+[workspace]
+resolver = "2"
+members = [
+    "crates/system76-firmware-setup",
+    "crates/system76-firmware-update",
+    "crates/system76-gop-policy",
+]
+
+[workspace.package]
+edition = "2021"
+license = "GPL-3.0-only"
+publish = false
+
+[workspace.dependencies]
+redox_uefi_std = "0.1.13"
+
+[profile.dev]
+lto = true
+opt-level = 1
+split-debuginfo = "packed"
+
+[profile.release]
+debug = true
+lto = true
+opt-level = 3
+split-debuginfo = "packed"
+#trim-paths = "all" # https://rust-lang.github.io/rfcs/3127-trim-paths.html

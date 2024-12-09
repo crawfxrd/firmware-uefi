@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-FileCopyrightText: 2024 System76, Inc.
+
+[package]
+name = "system76-firmware-setup"
+version = "1.0.0"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+redox_uefi_std.workspace = true
+memoffset = "0.9"
+orbclient = { version = "0.3.46", default-features = false }
+orbfont = { version = "0.1.12", default-features = false, features = ["no-std"] }
+
+[dependencies.system76_ectool]
+git = "https://github.com/system76/ec.git"
+default-features = false
+features = ["redox_hwio"]
+
+[features]
+default = []
