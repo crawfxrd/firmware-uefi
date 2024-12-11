@@ -3,3 +3,6 @@
 
 [build]
 target = "x86_64-unknown-uefi"
+rustflags = [
+    "-Clink-arg=/subsystem:efi_application",
+]
