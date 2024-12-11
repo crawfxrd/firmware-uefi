@@ -3,3 +3,5 @@
 
 .gitattributes export-ignore
 .gitignore export-ignore
+
+*.nsh -linguist-detectable
