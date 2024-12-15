@@ -8,37 +8,28 @@ Example:
 cargo new --bin crates/example-driver
 ```
 
-## `.cargo/config.toml`
+## Package build script
 
-Create a `.cargo/config.toml` file in the package directory that sets the
-default target to `x86_64-unknown-uefi` and sets the subsystem linker arg.
+`*-unknown-uefi` by default creates UEFI applications. For drivers, the
+subsystem type must be set by a linker argument.
 
-Example:
-
-```toml
-# SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: NONE
-
-[build]
-target = "x86_64-unknown-uefi"
-rustflags = [
-    "-Clink-arg=/subsystem:efi_runtime_driver",
-]
-```
-
-## Makefile
-
-Add a Makefile that sets the `PACKAGE` name and includes `common.mk`.
+Create a `build.rs` file in the package root that sets `/subsystem` for UEFI
+targets.
 
 Example:
 
-```make
-# SPDX-License-Identifier: GPL-3.0-only
-# SPDX-FileCopyrightText: 2024 System76, Inc.
+```rust
+// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-FileCopyrightText: 2024 System76, Inc.
 
-PACKAGE = example-driver
+use std::env;
 
-include ../common.mk
+fn main() {
+    let target = env::var("TARGET").unwrap();
+    if target.ends_with("-unknown-uefi") {
+        println!("cargo::rustc-link-arg=/subsystem:efi_boot_service_driver");
+    }
+}
 ```
 
 ## EDK II Module Information (INF) file
