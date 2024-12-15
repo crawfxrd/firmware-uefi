@@ -1,8 +1,0 @@
-# SPDX-License-Identifier: CC0-1.0
-# SPDX-FileCopyrightText: NONE
-
-[build]
-target = "x86_64-unknown-uefi"
-rustflags = [
-    "-Clink-arg=/subsystem:efi_application",
-]
