@@ -43,7 +43,7 @@ include ../common.mk
 
 ## EDK II Module Information (INF) file
 
-Add a `package.inf` if the package is to be integrated into an edk2 build.
+Add a `module.inf` if the package is to be integrated into an edk2 build.
 
 Example:
 
