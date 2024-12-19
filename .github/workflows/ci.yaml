@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# TODO: Update gop-policy to not require embedded file set from env var
+env:
+  FIRMWARE_OPEN_VBT: "../lemp9.vbt"
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - run: |
+        rustup show active-toolchain || rustup toolchain install
+    - run: cargo fetch --locked
+    - run: cargo fmt --check
+    - run: cargo clippy -- -D warnings
+      # TODO: Fix firmware-update warnings
+      continue-on-error: true
+
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    - run: |
+        rustup show active-toolchain || rustup toolchain install
+    - run: cargo fetch --locked
+    - run: cargo build --release
