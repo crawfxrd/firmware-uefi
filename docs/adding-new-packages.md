@@ -1,14 +1,17 @@
 # Adding a Cargo package
 
-Create a new Rust application in the `crates/` directory.
+## UEFI modules
+
+Create a new package in the `uefi/` directory.
 
 Example:
 
 ```
-cargo new --bin crates/example-driver
+cargo new --bin uefi/example-driver
+cargo new --lib uefi/example-lib
 ```
 
-## Package build script
+### Package build script
 
 `*-unknown-uefi` by default creates UEFI applications. For drivers, the
 subsystem type must be set by a linker argument.
@@ -32,7 +35,7 @@ fn main() {
 }
 ```
 
-## EDK II Module Information (INF) file
+### EDK II Module Information (INF) file
 
 Add a `module.inf` if the package is to be integrated into an edk2 build.
 

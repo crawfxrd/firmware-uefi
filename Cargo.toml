@@ -4,9 +4,9 @@
 [workspace]
 resolver = "2"
 members = [
-    "crates/system76-firmware-setup",
-    "crates/system76-firmware-update",
-    "crates/system76-gop-policy",
+    "uefi/system76-firmware-setup",
+    "uefi/system76-firmware-update",
+    "uefi/system76-gop-policy",
 ]
 
 [workspace.package]
