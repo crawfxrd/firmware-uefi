@@ -1,4 +1,4 @@
-# Adding a Cargo package
+# Adding packages
 
 ## UEFI modules
 
