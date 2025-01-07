@@ -1,11 +1,13 @@
 name: CI
 on:
   push:
-    branches: [main]
+    branches-ignore:
+    - 'wip/*'
   pull_request:
 
-# TODO: Update gop-policy to not require embedded file set from env var
 env:
+  CARGO_TERM_COLOR: always
+  # TODO: Update gop-policy to not require embedded file set from env var
   FIRMWARE_OPEN_VBT: "../lemp9.vbt"
 
 jobs:
@@ -13,8 +15,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
-    - run: |
-        rustup show active-toolchain || rustup toolchain install
+    - run: rustup show active-toolchain || rustup toolchain install
     - run: cargo fetch --locked
     - run: cargo fmt --check
     - run: cargo clippy -- -D warnings
@@ -25,7 +26,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
-    - run: |
-        rustup show active-toolchain || rustup toolchain install
+    - run: rustup show active-toolchain || rustup toolchain install
     - run: cargo fetch --locked
     - run: cargo build --release
