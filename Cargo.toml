@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-only
-# SPDX-FileCopyrightText: 2024 System76, Inc.
+# SPDX-FileCopyrightText: 2025 System76, Inc.
 
 [workspace]
 resolver = "2"
 members = [
+    "tools/xtask",
     "uefi/system76-firmware-setup",
     "uefi/system76-firmware-update",
     "uefi/system76-gop-policy",
@@ -18,13 +19,13 @@ publish = false
 redox_uefi_std = "0.1.13"
 
 [profile.dev]
-lto = true
 opt-level = 1
-split-debuginfo = "packed"
+panic = "abort"
 
 [profile.release]
 debug = true
 lto = true
 opt-level = 3
+panic = "abort"
 split-debuginfo = "packed"
 #trim-paths = "all" # https://rust-lang.github.io/rfcs/3127-trim-paths.html

@@ -55,3 +55,17 @@ Example:
 [Binaries.X64]
   PE32|target/x86_64-unknown-uefi/release/example-driver.efi|*
 ```
+
+## Host tools
+
+Create a new package in the `tools/` directory.
+
+Example:
+
+```
+cargo new --bin tools/host-tool
+cargo new --bin tools/host-lib
+```
+
+If it is to be used as a top-level tool, like `xtask`, add an alias for it in
+`.cargo/config.toml`.

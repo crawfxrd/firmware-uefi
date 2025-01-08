@@ -28,4 +28,4 @@ jobs:
     - uses: actions/checkout@v4
     - run: rustup show active-toolchain || rustup toolchain install
     - run: cargo fetch --locked
-    - run: cargo build --release
+    - run: cargo xtask build
