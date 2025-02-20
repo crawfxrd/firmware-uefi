@@ -15,7 +15,7 @@ use std::uefi::hii::{AnimationId, ImageId, StringId};
 use std::uefi::text::TextInputKey;
 
 use crate::display::{Display, Output};
-use crate::key::{raw_key, Key};
+use crate::key::{Key, raw_key};
 use crate::ui::Ui;
 
 // TODO: Move to uefi library {
@@ -120,12 +120,12 @@ impl<T> ListEntry<T> {
 
     unsafe fn object_at(&self, offset: usize) -> &T {
         let addr = self as *const Self as usize;
-        &*((addr - offset) as *const T)
+        unsafe { &*((addr - offset) as *const T) }
     }
 
     unsafe fn object_at_mut(&mut self, offset: usize) -> &mut T {
         let addr = self as *mut Self as usize;
-        &mut *((addr - offset) as *mut T)
+        unsafe { &mut *((addr - offset) as *mut T) }
     }
 }
 
@@ -140,11 +140,11 @@ macro_rules! list_entry {
     ($t:ident, $l:tt) => {
         impl ListEntryObject<$t> for ListEntry<$t> {
             unsafe fn object(&self) -> &$t {
-                self.object_at(offset_of!($t, $l))
+                unsafe { self.object_at(offset_of!($t, $l)) }
             }
 
             unsafe fn object_mut(&mut self) -> &mut $t {
-                self.object_at_mut(offset_of!($t, $l))
+                unsafe { self.object_at_mut(offset_of!($t, $l)) }
             }
         }
     };
@@ -511,9 +511,7 @@ fn form_display_inner(form: &Form, user_input: &mut UserInput) -> Result<()> {
 
             if let Some(op) = statement.OpCode() {
                 macro_rules! cast {
-                    ($type:ty) => {{
-                        op.cast::<$type>()
-                    }};
+                    ($type:ty) => {{ op.cast::<$type>() }};
                 }
                 match op.OpCode {
                     IfrOpCode::Action => {
@@ -574,7 +572,7 @@ fn form_display_inner(form: &Form, user_input: &mut UserInput) -> Result<()> {
                     IfrTypeValueEnum::U32(value) => format!("{value}"),
                     IfrTypeValueEnum::U64(value) => format!("{value}"),
                     IfrTypeValueEnum::Bool(value) => {
-                        return ui.draw_check_box(display, x, y, *value)
+                        return ui.draw_check_box(display, x, y, *value);
                     }
                     other => format!("{other:?}"),
                 };
