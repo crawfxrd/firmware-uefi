@@ -19,8 +19,6 @@ jobs:
     - run: cargo fetch --locked
     - run: cargo fmt --check
     - run: cargo clippy -- -D warnings
-      # TODO: Fix firmware-update warnings
-      continue-on-error: true
 
   build:
     runs-on: ubuntu-24.04
